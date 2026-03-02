@@ -185,8 +185,15 @@
                 <docs.home>../data/docs</docs.home>
               </systemProperties>
               <webApp>
-                <contextPath>/docs-web</contextPath>
+                <!-- 将 <contextPath>/docs-web</contextPath> 改为 <contextPath>/</contextPath>
+                让应用直接挂载到 Jetty 的根路径，访问 localhost:8080 即可命中应用 -->
+                <!-- <contextPath>/docs-web</contextPath> -->
+                <contextPath>/</contextPath>
                 <overrideDescriptor>${project.basedir}/src/dev/main/webapp/web-override.xml</overrideDescriptor>
+                <!-- 通过 <resourceBases> 配置告诉 Jetty，前端静态资源的根目录是 dist，确保 Jetty 能找到 index.html -->
+                <resourceBases>
+                  <resourceBase>${project.basedir}/src/main/webapp/dist</resourceBase>
+                </resourceBases>
               </webApp>
             </configuration>
           </plugin>
