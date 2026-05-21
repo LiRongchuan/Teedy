@@ -7,11 +7,13 @@ angular.module('docs').controller('Navigation', function($scope, $state, $stateP
   User.userInfo().then(function(data) {
     $rootScope.userInfo = data;
     if (data.anonymous) {
-      if($state.current.name !== 'login') {
-        $state.go('login', {
-          redirectState: $state.current.name,
-          redirectParams: JSON.stringify($stateParams),
-        }, {
+      if ($state.current.name !== 'login') {
+        var params = {};
+        if ($state.current.name !== 'main') {
+          params.redirectState = $state.current.name;
+          params.redirectParams = JSON.stringify($stateParams);
+        }
+        $state.go('login', params, {
           location: 'replace'
         });
       }
